@@ -1,0 +1,79 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mona - Login",
+        "description": "Enter your member portal credentials.",
+        "data": {
+          "username": "Member Number",
+          "password": "Password"
+        }
+      },
+      "otp_method": {
+        "title": "Choose Verification Method",
+        "description": "Select how you would like to receive your verification code.",
+        "data": {
+          "otp_method": "Send code via"
+        }
+      },
+      "otp": {
+        "title": "Enter Verification Code",
+        "description": "A verification code has been sent. Please enter it below.",
+        "data": {
+          "otp": "Verification Code"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate",
+        "description": "Your session has expired. Optionally update your password below, then select how to receive your verification code.",
+        "data": {
+          "password": "Password (leave blank to use saved)"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid member number or password",
+      "invalid_otp": "Invalid verification code",
+      "cannot_connect": "Unable to connect",
+      "unknown": "An unexpected error occurred"
+    },
+    "abort": {
+      "already_configured": "This account is already configured",
+      "reauth_successful": "Re-authentication successful"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "account_balance": {
+        "name": "Account Balance"
+      },
+      "investment_earnings": {
+        "name": "Investment Earnings"
+      },
+      "contributions_ytd": {
+        "name": "Contributions YTD"
+      },
+      "contribution_cap": {
+        "name": "Contribution Cap"
+      },
+      "return_1yr": {
+        "name": "1 Year Return"
+      },
+      "return_3yr": {
+        "name": "3 Year Return"
+      },
+      "return_5yr": {
+        "name": "5 Year Return"
+      },
+      "return_7yr": {
+        "name": "7 Year Return"
+      },
+      "return_10yr": {
+        "name": "10 Year Return"
+      },
+      "return_fytd": {
+        "name": "FYTD Return"
+      }
+    }
+  }
+}

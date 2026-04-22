@@ -1,8 +1,9 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   release:
@@ -16,7 +17,7 @@ jobs:
 
       - name: Update manifest version
         run: |
-          version="${{ github.event.release.tag_name }}"
+          version="${{ github.ref_name }}"
           version="${version#v}"
           jq --arg v "$version" '.version = $v' custom_components/mona/manifest.json > tmp.json
           mv tmp.json custom_components/mona/manifest.json
@@ -26,15 +27,16 @@ jobs:
           cd custom_components/mona
           zip -r ../../mona.zip .
 
-      - name: Upload release asset
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: mona.zip
+          generate_release_notes: true
 
       - name: Commit and push updated manifest
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add custom_components/mona/manifest.json
-          git diff --staged --quiet || git commit -m "Bump version to ${{ github.event.release.tag_name }}"
+          git diff --staged --quiet || git commit -m "Bump version to ${{ github.ref_name }}"
           git push origin main || true

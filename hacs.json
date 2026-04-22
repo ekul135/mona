@@ -1,5 +1,7 @@
 {
   "name": "Mona",
   "homeassistant": "2024.1.0",
-  "render_readme": true
+  "render_readme": true,
+  "filename": "mona.zip",
+  "zip_release": true
 }

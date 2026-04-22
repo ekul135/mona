@@ -11,7 +11,7 @@ CONF_SESSION_COOKIES = "session_cookies"
 
 # API
 BASE_URL = "https://member.secure.australianretirementtrust.com.au"
-AUTH_URL = "https://idsso.australianretirementtrust.com.au"
+AUTH_ENDPOINT = "/api/feature/mfa/config/json/realms/root/realms/SharedLogin/authenticate"
 
 # Update interval - 15 minutes to keep session alive (20 min timeout)
 DEFAULT_SCAN_INTERVAL = timedelta(minutes=15)

@@ -6,7 +6,7 @@ from typing import Any
 
 import aiohttp
 
-from .const import AUTH_URL, BASE_URL
+from .const import AUTH_ENDPOINT, BASE_URL
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -53,6 +53,7 @@ class MonaClient:
             "content-type": "application/json",
             "origin": BASE_URL,
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "x-requested-with": "forgerock-sdk",
         }
 
     async def _get_session(self) -> aiohttp.ClientSession:
@@ -86,17 +87,11 @@ class MonaClient:
         """Restore session cookies from storage."""
         session = await self._get_session()
         
-        # Create cookie objects for both domains
+        # Create cookie objects for the domain
         for name, value in cookies.items():
-            # Set for main domain
             session.cookie_jar.update_cookies(
                 {name: value},
                 response_url=aiohttp.client.URL(BASE_URL)
-            )
-            # Set for auth domain
-            session.cookie_jar.update_cookies(
-                {name: value},
-                response_url=aiohttp.client.URL(AUTH_URL)
             )
 
     async def login(self, username: str, password: str) -> bool:
@@ -116,7 +111,7 @@ class MonaClient:
         session = await self._get_session()
         
         # Step 1: Initialize authentication
-        auth_url = f"{AUTH_URL}/am/json/realms/root/realms/art/authenticate"
+        auth_url = f"{BASE_URL}{AUTH_ENDPOINT}"
         headers = {
             **self._headers,
             "accept-api-version": "protocol=1.0,resource=2.1",
@@ -222,7 +217,7 @@ class MonaClient:
             raise MonaAuthError("No authentication in progress")
 
         session = await self._get_session()
-        auth_url = f"{AUTH_URL}/am/json/realms/root/realms/art/authenticate"
+        auth_url = f"{BASE_URL}{AUTH_ENDPOINT}"
         headers = {
             **self._headers,
             "accept-api-version": "protocol=1.0,resource=2.1",
@@ -280,7 +275,7 @@ class MonaClient:
             raise MonaAuthError("No authentication in progress")
 
         session = await self._get_session()
-        auth_url = f"{AUTH_URL}/am/json/realms/root/realms/art/authenticate"
+        auth_url = f"{BASE_URL}{AUTH_ENDPOINT}"
         headers = {
             **self._headers,
             "accept-api-version": "protocol=1.0,resource=2.1",
